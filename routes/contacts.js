@@ -6,10 +6,10 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const Contact = require('../models/Contact');
 
-// @route   GET api/contacts/search
+// @route   POST api/contacts/search
 // @desc    GET calling number and messages given command
 // @access  public
-router.get('/search', async (req, res) => {
+router.post('/search', async (req, res) => {
   try {
     const contact = await Contact.find({ invocation: req.body.invocation });
     res.json(contact);
