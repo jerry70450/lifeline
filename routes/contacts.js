@@ -15,19 +15,37 @@ const Contact = require('../models/Contact');
 // @access  public
 router.post('/call', async (req, res) => {
   try {
-    const contact = await Contact.find({ invocation: req.body.invocation });
-    const phone = contact.phone;
-    const message = contact.message;
+    const contacts = await Contact.find({ invocation: req.body.invocation });
+    const phone = contacts[0].phone;
+    const message = contacts[0].message;
+
     const response = new VoiceResponse();
     response.say(message);
 
     client.calls
       .create({
-        url: response,
+        url: 'https://demo.twilio.com/docs/voice.xml',
         to: phone,
         from: '+16473615839'
       })
       .then(call => console.log(call.sid));
+    res.send('Call finished');
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('server error');
+  }
+});
+
+// @route   GET api/contacts/response/test
+// @desc    Get speech response based on text
+// @access  Public
+router.get('/response/test', async (req, res) => {
+  try {
+    const msg =
+      'This is an automated message. I need medical assistance, my address is 100 waterloo street, please help, thanks';
+    const response = new VoiceResponse();
+    response.say(msg);
+    res.send(response.toString());
   } catch (error) {
     console.error(error.message);
     res.status(500).send('server error');
