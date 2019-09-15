@@ -24,7 +24,8 @@ router.post('/call', async (req, res) => {
 
     client.calls
       .create({
-        url: 'https://demo.twilio.com/docs/voice.xml',
+        url:
+          'https://sheltered-plateau-16056.herokuapp.com/api/contacts/response/test',
         to: phone,
         from: '+16473615839'
       })
