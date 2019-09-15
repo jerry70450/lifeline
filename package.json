@@ -36,7 +36,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
     "react-router-dom": "^5.0.1",
-    "react-transition": "^1.0.3"
+    "react-transition": "^1.0.3",
+    "react-transition-group": "^4.3.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",

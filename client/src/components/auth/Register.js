@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
 
-const Login = () => {
+const Register = () => {
   const [user, setUser] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    password2: ''
   });
 
-  const { email, password } = user;
+  const { name, email, password, password2 } = user;
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
   return (
     <div className="form-container">
       <h1>
-        {' '}
-        <span className="text-primary"> Login </span>{' '}
+        <span className="text-primary">Register</span>
       </h1>
       <form>
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChange}
+            required
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -35,12 +46,22 @@ const Login = () => {
             value={password}
             onChange={onChange}
             required
+            minLength="6"
           />
         </div>
-
+        <div className="form-group">
+          <label htmlFor="password2">Confirm Password</label>
+          <input
+            type="password"
+            name="password2"
+            value={password2}
+            onChange={onChange}
+            required
+          />
+        </div>
         <input
           type="submit"
-          value="Login"
+          value="Register"
           className="btn btn-primary btn-block"
         />
       </form>
@@ -48,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
