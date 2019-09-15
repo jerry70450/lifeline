@@ -2,17 +2,32 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const accountSid = 'AC20691a0e3afd4fd598d561e3254ba5cd';
+const authToken = 'e6f0d57f4911466afb786c405cf13452';
+const VoiceResponse = require('twilio').twiml.VoiceResponse;
+const client = require('twilio')(accountSid, authToken);
 
 const User = require('../models/User');
 const Contact = require('../models/Contact');
 
-// @route   POST api/contacts/search
-// @desc    GET calling number and messages given command
+// @route   POST api/contacts/call
+// @desc    Call calling number with message given command
 // @access  public
-router.post('/search', async (req, res) => {
+router.post('/call', async (req, res) => {
   try {
     const contact = await Contact.find({ invocation: req.body.invocation });
-    res.json(contact);
+    const phone = contact.phone;
+    const message = contact.message;
+    const response = new VoiceResponse();
+    response.say(message);
+
+    client.calls
+      .create({
+        url: response,
+        to: phone,
+        from: '+16473615839'
+      })
+      .then(call => console.log(call.sid));
   } catch (error) {
     console.error(error.message);
     res.status(500).send('server error');
