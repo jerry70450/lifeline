@@ -46,7 +46,7 @@ router.get('/response/test', async (req, res) => {
       'This is an automated message. I need medical assistance, my address is 100 waterloo street, please help, thanks';
     const response = new VoiceResponse();
     response.say(msg);
-    res.send(response.toString());
+    res.send(response);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('server error');
